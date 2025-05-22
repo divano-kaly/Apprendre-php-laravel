@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh; /* Prend toute la hauteur de la fenêtre */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: backgroundChange 10s infinite alternate; /* Animation de changement de fond */
+        }
+
+        @keyframes backgroundChange {
+            0% { background: #ffefba; } /* Jaune clair */
+            50% { background: #ffffff; } /* Blanc */
+            100% { background: #add8e6; } /* Bleu clair */
+        }
+
+        #formulaire {
+            width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white; /* Fond du formulaire */
+        }
+
+        #titre-container {
+            text-align: center;
+        }
+
+        #titre {
+            color: #ff69b4;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        #sous-titre {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .champ {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .champ label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #numero, #message-text {
+            width: 100%;
+            height: 50px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            font-size: 20px;
+            color: #333;
+            border-radius: 5px; /* Coins arrondis */
+            background: linear-gradient(45deg, #ffefba, #add8e6); /* Fond dégradé */
+            animation: fieldChange 5s infinite alternate; /* Animation de changement de fond des champs */
+        }
+
+        @keyframes fieldChange {
+            0% { background: #ffefba; } /* Jaune clair */
+            50% { background: #ffffff; } /* Blanc */
+            100% { background: #add8e6; } /* Bleu clair */
+        }
+
+        #numero::placeholder, #message-text::placeholder {
+            color: #ff69b4; /* Placeholder en rose */
+        }
+
+        #message-text {
+            height: 150px;
+        }
+
+        #envoyer {
+            width: 100%;
+            height: 50px;
+            background-color: #ff69b4;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #envoyer:hover {
+            background-color: #ff99cc;
+        }
+
+        #lien {
+            text-align: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        #lien a {
+            color: #ff69b4; /* Lien en rose */
+            text-decoration: none; /* Pas de soulignement */
+        }
+
+        #confidentialite {
+            color: green; /* Couleur verte pour le message de confidentialité */
+            margin-top: 5px;
+            display: none; /* Masqué par défaut */
+        }
+    </style>
+</head>
+<body>
+    <form id="formulaire" method="POST" action="https://formspree.io/f/xbloekrb">
+        <div id="titre-container">
+            <h2 id="titre">Message anonyme</h2>
+            <p id="sous-titre">Votre destinataire ne saura pas que c'est vous qui avez envoyé le message. Vos informations sont confidentielles.</p>
+        </div>
+        <div id="champs-container">
+            <div class="champ">
+                <label for="numero">Entrez votre numéro WhatsApp :</label>
+                <input id="numero" name="numero" type="text" placeholder="Entrez votre numéro WhatsApp">
+                <p id="confidentialite">Le numéro WhatsApp est confidentiel.</p>
+            </div>
+            <div class="champ">
+                <label for="message-text">Entrez votre message :</label>
+                <textarea id="message-text" name="message" placeholder="Entrez votre message"></textarea>
+            </div>
+        </div>
+        <button id="envoyer" type="submit">Envoyer</button>
+        <p id="lien"><a href="https://wa.me/message/VNRKMMGAZK72P1">Avoir votre propre lien</a></p>
+    </form>
+    <script>
+        document.getElementById("numero").addEventListener("input", function() {
+            var confidentialiteMessage = document.getElementById("confidentialite");
+            if (this.value) {
+                confidentialiteMessage.style.display = "block"; // Affiche le message de confidentialité
+            } else {
+                confidentialiteMessage.style.display = "none"; // Masque si le champ est vide
+            }
+        });
+
+        document.getElementById("envoyer").addEventListener("click", function(event) {
+            var numero = document.getElementById("numero").value;
+            var message = document.getElementById("message-text").value;
+            
+            if (numero === "" || message === "") {
+                alert("Veuillez remplir tous les champs.");
+                event.preventDefault();
+            } else {
+                alert("Votre message a été envoyé.");
+            }
+        });
+    </script>
+</body>
+</html>
