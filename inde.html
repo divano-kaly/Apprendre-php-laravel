@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forfaits Cameroun - MTN & Orange</title>
+<style>
+/* Base */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  background: #f0f2f5;
+}
+header {
+  background: linear-gradient(90deg,#ffcc00,#ff6600);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+nav {
+  display: flex;
+  justify-content: center;
+  background: #333;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap;
+}
+nav a {
+  color: white;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  font-weight: bold;
+  position: relative;
+  transition: 0.3s;
+}
+nav a.active {
+  color: #ffcc00;
+}
+nav a.active::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: #ffcc00;
+  bottom: 0;
+  left: 0;
+  border-radius: 2px;
+}
+
+/* Container */
+.container {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 20px;
+}
+.forfait {
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+
+  /* Animation */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.forfait.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.operator-title {
+  display: none;
+  transition: opacity 0.4s ease;
+}
+
+.operator-title.show {
+  display: block;
+  opacity: 1;
+  margin-bottom: 10px;
+}
+.forfait.show {
+  display: flex; /* Affiché */
+  opacity: 1;
+  transform: translateY(0);
+}
+.forfait h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+.forfait span {
+  color: #555;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+/* Opérateurs */
+.forfait.mtn {
+  background: #e1f3ff;
+  border-left: 5px solid #0099ff;
+}
+.forfait.orange {
+  background: #fff4e1;
+  border-left: 5px solid #ff6600;
+}
+/* Boutons */
+.forfait button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.forfait.mtn button {
+  background: #0099ff;
+  color: white;
+}
+.forfait.mtn button:hover {
+  background: #007acc;
+}
+.forfait.orange button {
+  background: #ff6600;
+  color: white;
+}
+.forfait.orange button:hover {
+  background: #cc5200;
+}
+
+/* Hover carte */
+.forfait:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+/* Titres opérateur */
+h2.operator-title {
+  grid-column: 1/-1;
+  margin-top: 40px;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+  font-size: 1.4rem;
+}
+@media(max-width:600px){
+  nav a {padding:0.8rem 1rem;}
+}
+
+
+.operator-title {
+  display: none; /* Masqué par défaut */
+}
+.operator-title.show {
+  display: block; /* Affiché uniquement si la catégorie contient des forfaits */
+}
+.forfait {
+  display: none; /* Masqué par défaut */
+}
+.forfait.show {
+  display: flex; /* Affiché pour la catégorie sélectionnée */
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<header>
+🌍 Forfaits MTN & Orange Cameroun
+</header>
+
+<nav>
+  <a href="#" class="nav-link active" data-target="internet">Connexion Internet</a>
+  <a href="#" class="nav-link" data-target="appels">Appels</a>
+  <a href="#" class="nav-link" data-target="sms">SMS</a>
+</nav>
+
+<div class="container" id="forfaits-container">
+  <!-- MTN Internet -->
+  <h2 class="operator-title">📶 MTN</h2>
+  <div class="forfait mtn" data-categorie="internet"><h3>14 Go </h3><span>2000 FCFA</span><button onclick="acheter('MTN','Internet 14 Go','2000 FCFA')">Acheter</button></div>
+  <div class="forfait mtn" data-categorie="internet"><h3>23 Go</h3><span>3000 FCFA</span><button onclick="acheter('MTN','Internet 23 Go','3000 FCFA')">Acheter</button></div>
+  <div class="forfait mtn" data-categorie="internet"><h3>33 Go</h3><span>4000 FCFA</span><button onclick="acheter('MTN','Internet 33 Go','4000 FCFA')">Acheter</button></div>
+  <div class="forfait mtn" data-categorie="internet"><h3>50 Go</h3><span>5000 FCFA</span><button onclick="acheter('MTN','Internet 50 Go','5000 FCFA')">Acheter</button></div>
+  <div class="forfait mtn" data-categorie="internet"><h3>Illimité 7 jours</h3><span>3500 FCFA</span><button onclick="acheter('MTN','Internet Illimité 7 jours ','3500 FCFA')">Acheter</button></div>
+
+<div class="forfait mtn" data-categorie="internet"><h4>Illimité 1 mois</h4><span>6200 FCFA</span><button onclick="acheter('MTN','Internet Illimité 7 jours ','6200 FCFA')">Acheter</button></div>
+
+
+
+<div class="forfait mtn" data-categorie="internet"><h4>Illimité 3 mois</h4><span>14800 FCFA</span><button onclick="acheter('MTN','Internet Illimité 3  mois ','14800 FCFA')">Acheter</button></div>
+
+  <!-- MTN Appels -->
+ 
+  <div class="forfait mtn" data-categorie="appels"><h3>11 heures</h3><span>2300 FCFA</span><button onclick="acheter('MTN','Appels 11 heures ','2300 FCFA')">Acheter</button></div>
+  <div class="forfait mtn" data-categorie="appels"><h3>18 heures  </h3><span>3000 FCFA</span><button onclick="acheter('MTN','Appels 18 heures','3000 FCFA')">Acheter</button></div>
+  <div class="forfait mtn" 
+  <div class="forfait mtn" data-categorie="appels"><h3>Illimité 1 mois </h3><span>4500 FCFA</span><button onclick="acheter('MTN','Appels Illimité 1 mois','4500 FCFA')">Acheter</button></div>
+
+  <!-- MTN SMS -->
+ 
+  <div class="forfait mtn" data-categorie="sms"><h3>9200 SMS</h3><span>1000 FCFA</span><button onclick="acheter('MTN','SMS 9200','1000 FCFA')">Acheter</button></div>
+
+  <div class="forfait mtn" data-categorie="sms"><h3>Illimité 1 mois</h3><span>1500 FCFA</span><button onclick="acheter('MTN','SMS Illimité 1 mois','1500 FCFA')">Acheter</button></div>
+
+  
+
+  <!-- Orange Internet -->
+  <h2 class="operator-title">📶 Orange</h2>
+  <div class="forfait orange" data-categorie="internet"><h3>13 Go</h3><span>2000 FCFA</span><button onclick="acheter('Orange','Internet 13 Go','2000 FCFA')">Acheter</button></div>
+  <div class="forfait orange" data-categorie="internet"><h3>22 Go</h3><span>3000 FCFA</span><button onclick="acheter('Orange','Internet 22 Go','3000 FCFA')">Acheter</button></div>
+  <div class="forfait orange" data-categorie="internet"><h3>32 Go</h3><span>4000 FCFA</span><button onclick="acheter('Orange','Internet 32 Go','4000 FCFA')">Acheter</button></div>
+  <div class="forfait orange" data-categorie="internet"><h3>48 Go</h3><span>5000 FCFA</span><button onclick="acheter('Orange','Internet 48 Go','5000 FCFA')">Acheter</button></div>
+  <div class="forfait orange" data-categorie="internet"><h3>Illimité 7 jours</h3><span>4200 FCFA</span><button onclick="acheter('Orange','Internet Illimité 7 jours','4200 FCFA')">Acheter</button></div>
+
+
+<div class="forfait orange" data-categorie="internet"><h3>Illimité 1 mois </h3><span>6500 FCFA</span><button onclick="acheter('Orange','Internet Illimité 1 mois ','6500 FCFA')">Acheter</button></div>
+
+
+<div class="forfait orange" data-categorie="internet"><h3>Illimité 3 mois</h3><span>15000 FCFA</span><button onclick="acheter('Orange','Internet Illimité 3 mois','15000 FCFA')">Acheter</button></div>
+
+  <!-- Orange Appels -->
+  <div class="forfait orange" data-categorie="appels"><h3>13 heures</h3><span>2000 FCFA</span><button onclick="acheter('Orange','Appels 13 heures','2000 FCFA')">Acheter</button></div>
+ 
+  <div class="forfait orange" data-categorie="appels"><h3>Illimité 7 Jours</h3><span>3500 FCFA</span><button onclick="acheter('Orange','Appels Illimité 7 jours','3500 FCFA')">Acheter</button></div>
+ <div class="forfait orange" data-categorie="appels"><h3>Illimité 1 mois</h3><span>6500 FCFA</span><button onclick="acheter('Orange','Appels Illimité 1 mois','6500 FCFA')">Acheter</button></div>
+
+
+  <!-- Orange SMS -->
+  
+  <div class="forfait orange" data-categorie="sms"><h3>9870 SMS</h3><span>1500 FCFA</span><button onclick="acheter('Orange','SMS 9870','1500 FCFA')">Acheter</button></div>
+  <div class="forfait orange" data-categorie="sms"><h3>Illimité 1 mois</h3><span>2000 FCFA</span><button onclick="acheter('Orange','SMS Illimité 1 mois','2000 FCFA')">Acheter</button></div>
+</div>
+
+<script>
+// Numéros WhatsApp pour chaque opérateur
+const numeroMTN = "237670000000";     // Remplace par ton numéro MTN
+const numeroOrange = "237670048327";  // Remplace par ton numéro Orange
+
+function acheter(operateur, forfait, prix, nomClient = "cher client") {
+  // Choisir le numéro selon l'opérateur
+  let numero = "";
+  if (operateur.toLowerCase() === "mtn") {
+    numero = numeroMTN;
+  } else if (operateur.toLowerCase() === "orange") {
+    numero = numeroOrange;
+  }
+
+  // Message personnalisé
+
+const message = `Bonjour Monsieur 👋, je souhaite acheter le forfait ${operateur} ${forfait} à ${prix}. 
+Merci de m’indiquer la procédure .`;
+
+  
+  
+  // Ouvrir WhatsApp avec le message
+  const url = `https://wa.me/${numero}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+}
+
+// Navigation et filtrage par catégorie
+const navLinks = document.querySelectorAll('.nav-link');
+const forfaits = document.querySelectorAll('.forfait');
+const titles = document.querySelectorAll('h2.operator-title');
+
+function filtrerCategorie(categorie) {
+  // Masquer tous les forfaits et titres
+  forfaits.forEach(f => f.classList.remove('show'));
+  titles.forEach(t => t.classList.remove('show'));
+
+  // Afficher les nouveaux forfaits et titres après un petit délai pour l’animation
+  setTimeout(() => {
+    forfaits.forEach(f => {
+      if(f.dataset.categorie === categorie){
+        f.classList.add('show');
+      }
+    });
+    titles.forEach(t => {
+      let next = t.nextElementSibling;
+      let showTitle = false;
+      while(next && !next.classList.contains('operator-title')){
+        if(next.dataset.categorie === categorie){
+          showTitle = true;
+          break;
+        }
+        next = next.nextElementSibling;
+      }
+      t.classList.toggle('show', showTitle);
+    });
+  }, 200); // délai 200ms pour transition
+}
+
+// Gestion des clics sur le menu
+navLinks.forEach(link => {
+  link.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const target = link.getAttribute('data-target');
+    navLinks.forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    filtrerCategorie(target);
+  });
+});
+
+// Affiche Internet par défaut au chargement
+filtrerCategorie('internet');
+</script>
+</body>
+</html>
